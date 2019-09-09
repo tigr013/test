@@ -60,7 +60,7 @@
 				let stopwatch = self.getAttribute('data-val');
 				let num;
 
-				window.setInterval(changeColor, this.getAttribute('data-val') * 1000); // ни как не хочет меняться
+				window.setInterval(changeColor, this.getAttribute('data-val') * 1000); // тут косяк - не обновляет время
 
 				function changeColor() {
 					let time_color_pos;
