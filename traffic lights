@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>traffic lights</title>
+	<meta charset="utf-8">
+	<script src="vue.js"></script>
+</head>
+<body>
+
+	<style type="text/css">
+		#traffic_lights {
+			height: 500px;
+			width: 200px;
+			border: 5px solid black;
+			margin: 5% auto;
+		}
+
+		#traffic_lights div {
+			margin: 7px auto;
+			height: 150px;
+			width: 150px;
+			border: 3px solid black;
+			border-radius: 50%;
+		}
+
+		.red {
+			background-color: red;
+		}
+
+		.yellow {
+			background: yellow;
+		}
+
+		.green {
+			background: green;
+		}
+	</style>
+
+	<div id="traffic_lights">
+		<div id="screen1"></div>
+		<div id="screen2"></div>
+		<div id="screen3"></div>
+	</div>
+
+	<script>
+		window.onload = function() {
+			let arr = document.querySelectorAll('#traffic_lights div');
+			let color_arr = ['red', 'yellow', 'green'];
+			let time_arr = [3, 1, 2];
+
+			for (let i = 0; i < arr.length; i++) {
+				arr[i].classList.add(color_arr[i]);
+				arr[i].setAttribute('data-val', time_arr[i]);
+
+				arr[i].addEventListener('click', start.bind(arr[i], arr[i]));
+			}			
+
+			function start() {
+				let self = this;
+				let stopwatch = self.getAttribute('data-val');
+				let num;
+
+				window.setInterval(changeColor, this.getAttribute('data-val') * 1000);
+
+				function changeColor() {
+					let time_color_pos;
+
+
+					time_arr.filter((elem, index) => {
+						if (stopwatch == elem) {
+							time_color_pos = index;
+						}
+					});
+					self.classList.remove(color_arr[time_color_pos]);
+
+					time_color_pos++;
+
+					if (time_color_pos == 3) {
+						time_color_pos = 0;
+					}
+					stopwatch = time_arr[time_color_pos];
+					self.setAttribute('data-val', stopwatch);
+
+					self.classList.add(color_arr[time_color_pos]);
+				}
+				this.removeEventListener('click', start);
+			}
+		}
+	</script>
+
+</body>
+</html>
